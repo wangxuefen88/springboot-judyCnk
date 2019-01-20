@@ -1,5 +1,12 @@
 # springboot-judyCnk
 
+
+项目框架
+springboot
+jpa
+mysql
+
+
 创建数据库sql语句
 
 CREATE TABLE `product_info` (

@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username : root
+    password : judy
+    url: jdbc:mysql://localhost/cnk?characterEncoding=utf-8&useSSL=false
+    jpa:
+         show-sql : false
+    jackson:
+        default-property-inclusion: non_null
+
+server:
+  servlet:
+    context-path: /judy
+spring.jpa.properties.hibernate.enable_lazy_load_no_trans : true
+spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
