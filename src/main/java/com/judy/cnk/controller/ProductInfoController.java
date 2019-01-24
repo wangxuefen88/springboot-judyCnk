@@ -1,9 +1,9 @@
 package com.judy.cnk.controller;
 
-import com.judy.cnk.Empty.ProductInfo;
-import com.judy.cnk.Vo.result;
+import com.judy.cnk.empty.ProductInfo;
+import com.judy.cnk.vo.Result;
 import com.judy.cnk.service.ProductInfoService;
-import com.judy.cnk.util.resultUtil;
+import com.judy.cnk.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +19,18 @@ public class ProductInfoController {
     @Autowired
     private ProductInfoService productInfoService;
 
-
     /**
      * 添加商品
      * @param productInfo 商品信息
      * @return
      */
     @PostMapping("/insert")
-    public result insert(@RequestBody  ProductInfo productInfo){
+    public Result insert(@RequestBody  ProductInfo productInfo){
         if (productInfo == null) {
-            return resultUtil.file();
+            return ResultUtil.file();
         }
         ProductInfo productInfoInsert = productInfoService.insert(productInfo);
-        return resultUtil.sucssess(productInfoInsert);
+        return ResultUtil.sucssess(productInfoInsert);
     }
 
     /***
@@ -41,11 +40,25 @@ public class ProductInfoController {
      * @return
      */
     @GetMapping("/reduce")
-    public result reduce(@RequestParam("productId") Integer productId,@RequestParam("num") Integer num){
+    public Result reduce(@RequestParam("productId") Integer productId, @RequestParam("num") Integer num){
         if (productId == null || num == null) {
-            return resultUtil.file();
+            return ResultUtil.file();
         }
-        boolean reduce = productInfoService.reduce(productId, num);
-        return resultUtil.sucssess(reduce);
+        ProductInfo productInfo = productInfoService.reduce(productId, num);
+        return ResultUtil.sucssess(productInfo);
+    }
+
+    /***
+     *  查询商品
+     * @param productId 商品id
+     * @return
+     */
+    @GetMapping("/queryProduct")
+    public Result queryProduct(@RequestParam("productId") Integer productId){
+        if (productId == null) {
+            return ResultUtil.file();
+        }
+        ProductInfo productInfo = productInfoService.queryProduct(productId);
+        return ResultUtil.sucssess(productInfo);
     }
 }

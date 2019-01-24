@@ -1,18 +1,20 @@
 package com.judy.cnk.serviceIml;
 
-import com.judy.cnk.Dao.ProductInfoDao;
-import com.judy.cnk.Empty.ProductInfo;
+import com.judy.cnk.dao.ProductInfoDao;
+import com.judy.cnk.empty.ProductInfo;
 import com.judy.cnk.service.ProductInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 /**
  * @Author: judy
  * @Description:
  * @Date: Created in 23:24 2019/1/19
  */
+@Slf4j
 @Service
 public class ProductInfoServiceIml implements ProductInfoService {
     @Autowired
@@ -34,26 +36,39 @@ public class ProductInfoServiceIml implements ProductInfoService {
      * @param num 商品数量
      * @return
      */
+
     @Override
-    public boolean reduce(int productId, int num) {
+    public synchronized ProductInfo reduce(int productId, int num) {
         //1查看是否有该商品
         //2更新库存商品数量,库存数量在可减范围之内
-        Optional<ProductInfo> productInfoOptional = productInfoDao.findById(productId);
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        log.info("productInfo 库存"+productInfo.getProductStock());
         //判断是否有值
-        if(productInfoOptional.isPresent()){
-            ProductInfo productInfo = productInfoOptional.get();
+        if(productInfo!=null){
             //商品数量为0
             if(productInfo.getProductStock()==0){
-                return false;
+                log.info("productId-{},商品数量为0");
+                return null;
             }
             //商品数量大于库存数量
             if(productInfo.getProductStock() < num){
-                return false;
+                log.warn("productId-{},商品数量大于库存数量");
+                return null;
             }
             productInfo.setProductStock(productInfo.getProductStock()-num);
-            productInfoDao.save(productInfo);
-            return true;
+            ProductInfo productInfo1 = productInfoDao.save(productInfo);
+            return productInfo1;
         }
-        return false;
+        log.info("productId-{},没有此商品");
+        return null;
+    }
+    /***
+     *  查询商品
+     * @param productId 商品id
+     * @return
+     */
+    @Override
+    public ProductInfo queryProduct(Integer productId) {
+        return productInfoDao.findOne(productId);
     }
 }

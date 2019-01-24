@@ -1,4 +1,4 @@
-package com.judy.cnk.Empty;
+package com.judy.cnk.empty;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -24,4 +24,6 @@ public class ProductInfo {
     private BigDecimal productPrice;
     private Integer productStock;
     private Integer productStatus;
+    @Version
+    private Integer version;
 }

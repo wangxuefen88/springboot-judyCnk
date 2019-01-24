@@ -1,6 +1,6 @@
-package com.judy.cnk.Dao;
+package com.judy.cnk.dao;
 
-import com.judy.cnk.Empty.ProductInfo;
+import com.judy.cnk.empty.ProductInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 

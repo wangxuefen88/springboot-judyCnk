@@ -1,4 +1,4 @@
-package com.judy.cnk.Vo;
+package com.judy.cnk.vo;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @param <T> data
  */
 @Data
- public class result<T>{
+ public class Result<T>{
     private Integer code;
     private String message;
     private T data;

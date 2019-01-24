@@ -1,6 +1,6 @@
 package com.judy.cnk.service;
 
-import com.judy.cnk.Empty.ProductInfo;
+import com.judy.cnk.empty.ProductInfo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProductInfoService {
     ProductInfo insert(ProductInfo productInfo);
-    boolean reduce(int productId,int num);
+    ProductInfo reduce(int productId,int num);
+    ProductInfo queryProduct(Integer productId);
 }
